@@ -4,10 +4,7 @@ import fr.eseo.e3e.projet2.formulaires.Epreuve;
 import fr.eseo.e3e.projet2.formulaires.Etudiant;
 import fr.eseo.e3e.projet2.formulaires.Formulaire;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class GestionnaireFormulaires {
 
@@ -181,5 +178,36 @@ public class GestionnaireFormulaires {
         System.out.println("Écart‑type (population)          : " + String.format("%.2f", ecartType));
     }
 
+    public void afficherGraphe() {
+        if (formulaires == null || formulaires.isEmpty()) {
+            System.out.println("Aucun formulaire disponible : le graphe est vide.");
+            return;
+        }
+        GrapheFraudeurs graphe = new GrapheFraudeurs(this.formulaires);
+        graphe.afficher();
+    }
+
+    public List<Etudiant> detecterRecidivistes() {
+        Map<Etudiant, Integer> comptage = new HashMap<>();
+        if (formulaires != null) {
+            for (Formulaire f : formulaires) {
+                if (f != null && f.getEtudiants() != null) {
+                    for (Etudiant e : f.getEtudiants()) {
+                        if (e != null) {
+                            comptage.put(e, comptage.getOrDefault(e, 0) + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        List<Etudiant> recidivistes = new ArrayList<>();
+        for (Map.Entry<Etudiant, Integer> entry : comptage.entrySet()) {
+            if (entry.getValue() >= 2) {
+                recidivistes.add(entry.getKey());
+            }
+        }
+        return recidivistes;
+    }
 
 }

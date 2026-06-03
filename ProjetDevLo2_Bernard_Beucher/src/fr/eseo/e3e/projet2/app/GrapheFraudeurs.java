@@ -36,7 +36,7 @@ public class GrapheFraudeurs {
     }
 
     public void ajouterArete(Etudiant e1, Etudiant e2) {
-        // en gros on veut check si les deux étudiants existent bien comme sommts dans le graphe
+        // en gros on veut check si les deux étudiants existent bien comme sommets dans le graphe
         if (adjacence.containsKey(e1) && adjacence.containsKey(e2)) {
             adjacence.get(e1).add(e2);
             adjacence.get(e2).add(e1);

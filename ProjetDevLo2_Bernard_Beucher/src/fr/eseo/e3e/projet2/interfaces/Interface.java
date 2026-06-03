@@ -90,85 +90,89 @@ public class Interface {
         return true;
     }
 
-        private void menuRechercheFormulaires(){
-            System.out.println("Recherche de formulaires ");
-            System.out.println("1. Par étudiant (numéro apprenant)");
-            System.out.println("2. Par épreuve (code ECUE)");
-            System.out.print("Votre choix : ");
-            String sousChoix = scanner.nextLine();
+    private void menuRechercheFormulaires(){
+        System.out.println("Recherche de formulaires ");
+        System.out.println("1. Par étudiant (numéro apprenant)");
+        System.out.println("2. Par épreuve (code ECUE)");
+        System.out.print("Votre choix : ");
+        String sousChoix = scanner.nextLine();
 
-            if (sousChoix.equals("1")){
-                System.out.print("Saisir le numéro apprenant : ");
-                String num = scanner.nextLine();
-                var resultats = gestionnaire.getFormulairesParEtudiant(num);
-                if (resultats.isEmpty()){
-                    System.out.println("Aucun formulaire n'a été trouvé");
-                }
-                else {
-                    System.out.println(resultats.size() + " formulaire/s trouvé/s");
-                }
-            }
-            else if (sousChoix.equals("2")) {
-                System.out.print("Saisir le code ECUE : ");
-                String code = scanner.nextLine();
-                var resultats = gestionnaire.getFormulairesParEpreuve(code);
-                if (resultats.isEmpty()){
-                    System.out.println("Aucun formulaire n'a été trouvé");
-                }
-                else {
-                    System.out.println(resultats.size() + " formulaire/s trouvé/s");
-                }
+        if (sousChoix.equals("1")){
+            System.out.print("Saisir le numéro apprenant : ");
+            int num = Integer.parseInt(scanner.nextLine());
+            var resultats = gestionnaire.getFormulairesParEtudiant(num);
+            if (resultats.isEmpty()){
+                System.out.println("Aucun formulaire n'a été trouvé");
             }
             else {
-                System.out.println("Erreur : option invalide");
+                System.out.println(resultats.size() + " formulaire/s trouvé/s");
             }
         }
-
-        private void menuRechercheEtudiant(){
-            System.out.println("Recherche d'un étudiant ");
-            System.out.println("1. Par nom");
-            System.out.println("2. Par prénom");
-            System.out.println("3. Par numéro apprenant");
-            System.out.print("Votre choix : ");
-            String sousChoix = scanner.nextLine();
-
-            if (sousChoix.equals("1")){
-                System.out.print("Saisir le nom  : ");
-                String nom = scanner.nextLine();
-                var resultats = gestionnaire.rechercherParNom(nom);
-                if (resultats.isEmpty()){
-                    System.out.println("Aucun étudiant n'a été trouvé");
-                }
-                else {
-                    System.out.println(resultats.size() + " étudiant/s trouvé/s");
-                }
-            }
-            else if (sousChoix.equals("2")) {
-                System.out.print("Saisir le prénom : ");
-                String prenom = scanner.nextLine();
-                var resultats = gestionnaire.rechercherParPrenom(prenom);
-                if (resultats.isEmpty()){
-                    System.out.println("Aucun étudiant n'a été trouvé");
-                }
-                else {
-                    System.out.println(resultats.size() + " étudiant/s trouvé/s");
-                }
-            }
-            else if (sousChoix.equals("3")) {
-                System.out.print("Saisir le numéro apprenant : ");
-                String num = scanner.nextLine();
-                Etudiant etudiant = gestionnaire.trouverParNumero(num);
-                if (etudiant == null){
-                    System.out.println("Aucun étudiant trouvé");
-                }
-                else{
-                    System.out.println("Etudiant trouvé : "+ etudiant.getNom() + " "+ etudiant.getPrenom());
-                }
+        else if (sousChoix.equals("2")) {
+            System.out.print("Saisir le code ECUE : ");
+            String code = scanner.nextLine();
+            var resultats = gestionnaire.getFormulairesParEpreuve(code);
+            if (resultats.isEmpty()){
+                System.out.println("Aucun formulaire n'a été trouvé");
             }
             else {
-                System.out.println("Erreur : option invalide");
+                System.out.println(resultats.size() + " formulaire/s trouvé/s");
             }
+        }
+        else {
+            System.out.println("Erreur : option invalide");
         }
     }
 
+    private void menuRechercheEtudiant(){
+        System.out.println("Recherche d'un étudiant ");
+        System.out.println("1. Par nom");
+        System.out.println("2. Par prénom");
+        System.out.println("3. Par numéro apprenant");
+        System.out.print("Votre choix : ");
+        String sousChoix = scanner.nextLine();
 
+        if (sousChoix.equals("1")){
+            System.out.print("Saisir le nom  : ");
+            String nom = scanner.nextLine();
+            var resultats = gestionnaire.rechercherParNom(nom);
+            if (resultats.isEmpty()){
+                System.out.println("Aucun étudiant n'a été trouvé");
+            }
+            else {
+                System.out.println(resultats.size() + " étudiant/s trouvé/s");
+            }
+        }
+        else if (sousChoix.equals("2")) {
+            System.out.print("Saisir le prénom : ");
+            String prenom = scanner.nextLine();
+            var resultats = gestionnaire.rechercherParPrenom(prenom);
+            if (resultats.isEmpty()){
+                System.out.println("Aucun étudiant n'a été trouvé");
+            }
+            else {
+                System.out.println(resultats.size() + " étudiant/s trouvé/s");
+            }
+        }
+        else if (sousChoix.equals("3")) {
+            System.out.print("Saisir le numéro apprenant : ");
+            int num = Integer.parseInt(scanner.nextLine());
+            Etudiant etudiant = gestionnaire.trouverParNumero(num);
+            if (etudiant == null){
+                System.out.println("Aucun étudiant trouvé");
+            }
+            else{
+                System.out.println("Etudiant trouvé : "+ etudiant.getNom() + " "+ etudiant.getPrenom());
+            }
+        }
+        else {
+            System.out.println("Erreur : option invalide");
+        }
+    }
+
+    public static void main(String[] args) {
+        GestionnaireFormulaires gestionnaire = new GestionnaireFormulaires();
+        Interface ui = new Interface(gestionnaire);
+        ui.lancerMenu();
+    }
+}
