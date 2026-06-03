@@ -5,10 +5,6 @@ import java.time.LocalDate;
 public class FraudeIAG extends Fraude {
     private String nomService;
 
-    public FraudeIAG(){
-
-    }
-
     public FraudeIAG(LocalDate dateReleve, String descriptionTextuelle, String contenu, String nomService){
         super(dateReleve, descriptionTextuelle, contenu);
         this.nomService = nomService;

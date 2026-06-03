@@ -6,10 +6,6 @@ public class FraudeCalculatrice extends Fraude {
     private String marqueAppareil;
     private String programmeStocke;
 
-    public FraudeCalculatrice(){
-
-    }
-
     public FraudeCalculatrice(LocalDate dateReleve, String descriptionTextuelle, String contenu, String marqueAppareil, String programmeStocke) {
         super(dateReleve, descriptionTextuelle, contenu);
         this.marqueAppareil = marqueAppareil;
