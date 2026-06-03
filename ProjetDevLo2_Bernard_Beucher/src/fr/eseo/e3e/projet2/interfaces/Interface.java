@@ -2,8 +2,10 @@ package fr.eseo.e3e.projet2.interfaces;
 
 
 import fr.eseo.e3e.projet2.app.GestionnaireFormulaires;
+import fr.eseo.e3e.projet2.formulaires.Epreuve;
 import fr.eseo.e3e.projet2.formulaires.Etudiant;
 import fr.eseo.e3e.projet2.formulaires.Formulaire;
+import fr.eseo.e3e.projet2.formulaires.Modalite;
 
 import java.util.Scanner;
 
@@ -47,7 +49,7 @@ public class Interface {
     private boolean traiterOption(String choix) {
         switch (choix.toUpperCase()) {
             case "1":
-                System.out.println("Lancement procédure d'ajout...");
+                menuAjoutFormulaire();
                 break;
 
             case "2":
@@ -88,6 +90,59 @@ public class Interface {
                 System.out.println("Erreur : option invalide");
         }
         return true;
+    }
+
+    private void menuAjoutFormulaire() {
+        try {
+            System.out.println("=== Création d'un formulaire ===");
+
+            System.out.print("Code ECUE [DEVLO, POO, SHL, TEST, DEEP, DS, TNI, TNS, ASI, ANG]: ");
+            String code = scanner.nextLine().trim();
+
+            System.out.print("Date passage (AAAA-MM-JJ) : ");
+            java.time.LocalDate date = java.time.LocalDate.parse(scanner.nextLine().trim());
+
+            System.out.print("Heure passage (HH:MM) : ");
+            java.time.LocalTime heure = java.time.LocalTime.parse(scanner.nextLine().trim());
+
+            System.out.print("Durée (minutes) : ");
+            long minutes = Long.parseLong(scanner.nextLine().trim());
+
+            System.out.print("Modalité " + java.util.Arrays.toString(Modalite.values()) + " : ");
+            Modalite modalite =
+                    Modalite.valueOf(scanner.nextLine().trim().toUpperCase());
+
+            Epreuve epreuve =
+                    new Epreuve(
+                            code, date, heure, java.time.Duration.ofMinutes(minutes), modalite
+                    );
+
+            Formulaire formulaire = new Formulaire();
+            formulaire.setEpreuve(epreuve);
+
+            System.out.print("Nombre d'étudiants impliqués : ");
+            int nbEtudiants = Integer.parseInt(scanner.nextLine().trim());
+
+            for (int i = 1; i <= nbEtudiants; i++) {
+                System.out.println("Étudiant " + i + " :");
+                System.out.print("  Nom : ");
+                String nom = scanner.nextLine().trim();
+                System.out.print("  Prénom : ");
+                String prenom = scanner.nextLine().trim();
+                System.out.print("  Numéro apprenant : ");
+                int numero = Integer.parseInt(scanner.nextLine().trim());
+
+                formulaire.ajouterEtudiant(new Etudiant(nom, prenom, numero));
+            }
+
+            gestionnaire.ajouterFormulaire(formulaire);
+            gestionnaire.ajouterEpreuve(epreuve);
+
+            System.out.println("Formulaire ajouté avec succès. ID: " + formulaire.getIdentifiantNumeriqueUnique());
+
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la création du formulaire : " + e.getMessage());
+        }
     }
 
     private void menuRechercheFormulaires(){
