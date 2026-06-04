@@ -4,6 +4,9 @@ public class FraudePapier extends Fraude {
     private String dimension;
     private boolean plieOuNon;
 
+    public FraudePapier() {
+        super();
+    }
 
     public FraudePapier(LocalDate dateReleve, String descriptionTextuelle, String contenu, String dimension, boolean plieOuNon) {
         super(dateReleve, descriptionTextuelle, contenu);

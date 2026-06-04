@@ -5,6 +5,9 @@ import java.time.LocalDate;
 public class FraudeIAGConnectee extends FraudeIAG {
     private String adresseIP;
 
+    public FraudeIAGConnectee() {
+        super();
+    }
 
     public FraudeIAGConnectee(LocalDate dateReleve, String descriptionTextuelle, String contenu, String nomService, String adresseIP){
         super(dateReleve, descriptionTextuelle, contenu, nomService);
