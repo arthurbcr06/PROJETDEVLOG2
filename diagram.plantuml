@@ -1,0 +1,245 @@
+@startuml
+class GestionnaireFormulaires {
+  fr.eseo.e3e.projet2.app
+  --
+  - formulaires: List<Formulaire>
+  - epreuves: List<Epreuve>
+  --
+  + GestionnaireFormulaires(): 
+  + getFormulaires(): List<Formulaire>
+  + setFormulaires(List<Formulaire>): void
+  + getEpreuves(): List<Epreuve>
+  + setEpreuves(List<Epreuve>): void
+  + ajouterFormulaire(Formulaire): void
+  + supprimerFormulaire(int): void
+  + ajouterEpreuve(Epreuve): void
+  + getFormulairesParEtudiant(int): List<Formulaire>
+  + getFormulairesParEpreuve(String): List<Formulaire>
+  + rechercherParNom(String): List<Etudiant>
+  + rechercherParPrenom(String): List<Etudiant>
+  + trouverParNumero(int): Etudiant
+  + calculerStatistiques(): void
+  + afficherGraphe(): void
+  + detecterRecidivistes(): List<Etudiant>
+}
+class GrapheFraudeurs {
+  fr.eseo.e3e.projet2.app
+  --
+  - adjacence: Map<Etudiant, Set<Etudiant>>
+  --
+  + GrapheFraudeurs(): 
+  + GrapheFraudeurs(List<Formulaire>): 
+  + ajouterSommet(Etudiant): void
+  + ajouterArete(Etudiant, Etudiant): void
+  + afficher(): void
+  + getVoisins(Etudiant): Set<Etudiant>
+}
+enum Cursus {
+  fr.eseo.e3e.projet2.formulaires
+  --
+  + E1: Cursus
+  + E2: Cursus
+  + E3e: Cursus
+  + E3a: Cursus
+  + E4: Cursus
+  + E5: Cursus
+  + B1: Cursus
+  + B2: Cursus
+  + B3: Cursus
+  --
+  + values(): Cursus[]
+  + valueOf(String): Cursus
+  - Cursus(): 
+}
+class Epreuve {
+  fr.eseo.e3e.projet2.formulaires
+  --
+  - codeECUE: String
+  - datePassage: LocalDate
+  - heurePassage: LocalTime
+  - dureePassage: Duration
+  - modalite: Modalite
+  --
+  + Epreuve(): 
+  + Epreuve(String, LocalDate, LocalTime, Duration, Modalite): 
+  + getCodeECUE(): String
+  + setCodeECUE(String): void
+  + getDatePassage(): LocalDate
+  + setDatePassage(LocalDate): void
+  + getHeurePassage(): LocalTime
+  + setHeurePassage(LocalTime): void
+  + getDureePassage(): Duration
+  + setDureePassage(Duration): void
+  + getModalite(): Modalite
+  + setModalite(Modalite): void
+}
+class Etudiant {
+  fr.eseo.e3e.projet2.formulaires
+  --
+  - nom: String
+  - prenom: String
+  - numeroApprenant: int
+  - cursus: Cursus
+  --
+  + Etudiant(): 
+  + Etudiant(String, String, int, Cursus): 
+  + getNom(): String
+  + setNom(String): void
+  + getPrenom(): String
+  + setPrenom(String): void
+  + getNumeroApprenant(): int
+  + getCursus(): Cursus
+  + setCursus(Cursus): void
+  + setNumeroApprenant(int): void
+  + equals(Object): boolean
+  + hashCode(): int
+}
+class Formulaire {
+  fr.eseo.e3e.projet2.formulaires
+  --
+  - compteur: int
+  - identifiantNumeriqueUnique: int
+  - dateCreation: LocalDate
+  - dateDerniereModification: LocalDate
+  - epreuve: Epreuve
+  - sanction: Sanction
+  - etudiants: List<Etudiant>
+  - fraudes: List<Fraude>
+  --
+  + Formulaire(): 
+  + Formulaire(Epreuve, List<Etudiant>, List<Fraude>, Sanction): 
+  + ajouterEtudiant(Etudiant): void
+  + ajouterFraude(Fraude): void
+  + getSanction(): Sanction
+  + getEtudiants(): List<Etudiant>
+  + getFraudes(): List<Fraude>
+  + getEpreuve(): Epreuve
+  + getDateDerniereModification(): LocalDate
+  + getIdentifiantNumeriqueUnique(): int
+  + getDateCreation(): LocalDate
+  + setSanction(Sanction): void
+  + setEpreuve(Epreuve): void
+}
+abstract Fraude {
+  fr.eseo.e3e.projet2.formulaires.fraudes
+  --
+  - dateReleve: LocalDate
+  - descriptionTextuelle: String
+  - contenu: String
+  --
+  + Fraude(): 
+  + Fraude(LocalDate, String, String): 
+  + getDateReleve(): LocalDate
+  + setDateReleve(LocalDate): void
+  + getDescriptionTextuelle(): String
+  + setDescriptionTextuelle(String): void
+  + getContenu(): String
+  + setContenu(String): void
+}
+class FraudeCalculatrice {
+  fr.eseo.e3e.projet2.formulaires.fraudes
+  --
+  - marqueAppareil: String
+  - programmeStocke: String
+  --
+  + FraudeCalculatrice(): 
+  + FraudeCalculatrice(LocalDate, String, String, String, String): 
+  + getMarqueAppareil(): String
+  + setMarqueAppareil(String): void
+  + getProgrammeStocke(): String
+  + setProgrammeStocke(String): void
+}
+class FraudeIAG {
+  fr.eseo.e3e.projet2.formulaires.fraudes
+  --
+  - nomService: String
+  --
+  + FraudeIAG(): 
+  + FraudeIAG(LocalDate, String, String, String): 
+  + getNomService(): String
+  + setNomService(String): void
+}
+class FraudeIAGConnectee {
+  fr.eseo.e3e.projet2.formulaires.fraudes
+  --
+  - adresseIP: String
+  --
+  + FraudeIAGConnectee(): 
+  + FraudeIAGConnectee(LocalDate, String, String, String, String): 
+  + getAdresseIP(): String
+  + setAdresseIP(String): void
+}
+class FraudePapier {
+  fr.eseo.e3e.projet2.formulaires.fraudes
+  --
+  - dimension: String
+  - plieOuNon: boolean
+  --
+  + FraudePapier(): 
+  + FraudePapier(LocalDate, String, String, String, boolean): 
+  + getDimension(): String
+  + setDimension(String): void
+  + isPlieOuNon(): boolean
+  + setPlieOuNon(boolean): void
+}
+enum Modalite {
+  fr.eseo.e3e.projet2.formulaires
+  --
+  + ECRIT: Modalite
+  + ORAL: Modalite
+  + QCM: Modalite
+  + ORDINATEUR: Modalite
+  + PROJET: Modalite
+  + TP: Modalite
+  --
+  + values(): Modalite[]
+  + valueOf(String): Modalite
+  - Modalite(): 
+}
+class Sanction {
+  fr.eseo.e3e.projet2.formulaires
+  --
+  - type: TypeSanction
+  - dateDecision: LocalDate
+  - commentaire: String
+  --
+  + Sanction(): 
+  + Sanction(TypeSanction, LocalDate, String): 
+  + getType(): TypeSanction
+  + setType(TypeSanction): void
+  + getDateDecision(): LocalDate
+  + setDateDecision(LocalDate): void
+  + getCommentaire(): String
+  + setCommentaire(String): void
+}
+enum TypeSanction {
+  fr.eseo.e3e.projet2.formulaires
+  --
+  + AVERTISSEMENT: TypeSanction
+  + EXCLUSION_SESSION: TypeSanction
+  + EXCLUSION_ETABLISSEMENT: TypeSanction
+  + SIGNALEMENT_PENAL: TypeSanction
+  --
+  + values(): TypeSanction[]
+  + valueOf(String): TypeSanction
+  - TypeSanction(): 
+}
+class Interface {
+  fr.eseo.e3e.projet2.interfaces
+  --
+  - gestionnaire: GestionnaireFormulaires
+  - etudiant: Etudiant
+  - scanner: Scanner
+  --
+  + Interface(): 
+  + Interface(GestionnaireFormulaires): 
+  - attendreRetour(): void
+  + lancerMenu(): void
+  - afficherMenu(): void
+  - traiterOption(String): boolean
+  - menuAjoutFormulaire(): void
+  - menuRechercheFormulaires(): void
+  - menuRechercheEtudiant(): void
+  + main(String[]): void
+}
+@enduml

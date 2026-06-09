@@ -1,0 +1,201 @@
+@startuml
+class fr.eseo.e3e.projet2.formulaires.Etudiant {
+- String nom
+- String prenom
+- int numeroApprenant
+- Cursus cursus
++ String getNom()
++ void setNom(String)
++ String getPrenom()
++ void setPrenom(String)
++ int getNumeroApprenant()
++ Cursus getCursus()
++ void setCursus(Cursus)
++ void setNumeroApprenant(int)
++ boolean equals(Object)
++ int hashCode()
+}
+
+
+enum fr.eseo.e3e.projet2.formulaires.Modalite {
++  ECRIT
++  ORAL
++  QCM
++  ORDINATEUR
++  PROJET
++  TP
+}
+
+class fr.eseo.e3e.projet2.formulaires.Formulaire {
+- {static} int compteur
+- int identifiantNumeriqueUnique
+- LocalDate dateCreation
+- LocalDate dateDerniereModification
+- Epreuve epreuve
+- Sanction sanction
+- List<Etudiant> etudiants
+- List<Fraude> fraudes
++ void ajouterEtudiant(Etudiant)
++ void ajouterFraude(Fraude)
++ Sanction getSanction()
++ List<Etudiant> getEtudiants()
++ List<Fraude> getFraudes()
++ Epreuve getEpreuve()
++ LocalDate getDateDerniereModification()
++ int getIdentifiantNumeriqueUnique()
++ LocalDate getDateCreation()
++ void setSanction(Sanction)
++ void setEpreuve(Epreuve)
+}
+
+
+class fr.eseo.e3e.projet2.formulaires.fraudes.FraudePapier {
+- String dimension
+- boolean plieOuNon
++ String getDimension()
++ void setDimension(String)
++ boolean isPlieOuNon()
++ void setPlieOuNon(boolean)
+}
+
+
+class fr.eseo.e3e.projet2.formulaires.fraudes.FraudeIAGConnectee {
+- String adresseIP
++ String getAdresseIP()
++ void setAdresseIP(String)
+}
+
+
+abstract class fr.eseo.e3e.projet2.formulaires.fraudes.Fraude {
+- LocalDate dateReleve
+- String descriptionTextuelle
+- String contenu
++ LocalDate getDateReleve()
++ void setDateReleve(LocalDate)
++ String getDescriptionTextuelle()
++ void setDescriptionTextuelle(String)
++ String getContenu()
++ void setContenu(String)
+}
+
+
+class fr.eseo.e3e.projet2.formulaires.fraudes.FraudeCalculatrice {
+- String marqueAppareil
+- String programmeStocke
++ String getMarqueAppareil()
++ void setMarqueAppareil(String)
++ String getProgrammeStocke()
++ void setProgrammeStocke(String)
+}
+
+
+class fr.eseo.e3e.projet2.app.GrapheFraudeurs {
+- Map<Etudiant,Set<Etudiant>> adjacence
++ void ajouterSommet(Etudiant)
++ void ajouterArete(Etudiant,Etudiant)
++ void afficher()
++ Set<Etudiant> getVoisins(Etudiant)
+}
+
+
+enum fr.eseo.e3e.projet2.formulaires.Cursus {
++  E1
++  E2
++  E3e
++  E3a
++  E4
++  E5
++  B1
++  B2
++  B3
+}
+
+class fr.eseo.e3e.projet2.app.GestionnaireFormulaires {
+- List<Formulaire> formulaires
+- List<Epreuve> epreuves
++ List<Formulaire> getFormulaires()
++ void setFormulaires(List<Formulaire>)
++ List<Epreuve> getEpreuves()
++ void setEpreuves(List<Epreuve>)
++ void ajouterFormulaire(Formulaire)
++ void supprimerFormulaire(int)
++ void ajouterEpreuve(Epreuve)
++ List<Formulaire> getFormulairesParEtudiant(int)
++ List<Formulaire> getFormulairesParEpreuve(String)
++ List<Etudiant> rechercherParNom(String)
++ List<Etudiant> rechercherParPrenom(String)
++ Etudiant trouverParNumero(int)
++ void calculerStatistiques()
++ void afficherGraphe()
++ List<Etudiant> detecterRecidivistes()
+}
+
+
+class fr.eseo.e3e.projet2.formulaires.Epreuve {
+- String codeECUE
+- LocalDate datePassage
+- LocalTime heurePassage
+- Duration dureePassage
+- Modalite modalite
++ String getCodeECUE()
++ void setCodeECUE(String)
++ LocalDate getDatePassage()
++ void setDatePassage(LocalDate)
++ LocalTime getHeurePassage()
++ void setHeurePassage(LocalTime)
++ Duration getDureePassage()
++ void setDureePassage(Duration)
++ Modalite getModalite()
++ void setModalite(Modalite)
+}
+
+
+class fr.eseo.e3e.projet2.formulaires.fraudes.FraudeIAG {
+- String nomService
++ String getNomService()
++ void setNomService(String)
+}
+
+
+enum fr.eseo.e3e.projet2.formulaires.TypeSanction {
++  AVERTISSEMENT
++  EXCLUSION_SESSION
++  EXCLUSION_ETABLISSEMENT
++  SIGNALEMENT_PENAL
+}
+
+class fr.eseo.e3e.projet2.interfaces.Interface {
+- GestionnaireFormulaires gestionnaire
+- Etudiant etudiant
+- Scanner scanner
+- void attendreRetour()
++ void lancerMenu()
+- void afficherMenu()
+- boolean traiterOption(String)
+- void menuAjoutFormulaire()
+- void menuRechercheFormulaires()
+- void menuRechercheEtudiant()
++ {static} void main(String[])
+}
+
+
+class fr.eseo.e3e.projet2.formulaires.Sanction {
+- TypeSanction type
+- LocalDate dateDecision
+- String commentaire
++ TypeSanction getType()
++ void setType(TypeSanction)
++ LocalDate getDateDecision()
++ void setDateDecision(LocalDate)
++ String getCommentaire()
++ void setCommentaire(String)
+}
+
+
+
+
+fr.eseo.e3e.projet2.formulaires.fraudes.Fraude <|-- fr.eseo.e3e.projet2.formulaires.fraudes.FraudePapier
+fr.eseo.e3e.projet2.formulaires.fraudes.FraudeIAG <|-- fr.eseo.e3e.projet2.formulaires.fraudes.FraudeIAGConnectee
+fr.eseo.e3e.projet2.formulaires.fraudes.Fraude <|-- fr.eseo.e3e.projet2.formulaires.fraudes.FraudeCalculatrice
+fr.eseo.e3e.projet2.formulaires.fraudes.Fraude <|-- fr.eseo.e3e.projet2.formulaires.fraudes.FraudeIAG
+@enduml
