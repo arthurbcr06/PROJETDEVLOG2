@@ -1,7 +1,7 @@
 package fr.eseo.e3e.projet2.formulaires;
 
 /**
- * @brief Énumération des cursus reconnus dans l'établissement.
+ * Énumération des cursus reconnus dans l'établissement.
  */
 
 public enum Cursus {

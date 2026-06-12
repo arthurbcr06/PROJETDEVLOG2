@@ -2,6 +2,7 @@ package fr.eseo.e3e.projet2.formulaires;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Duration;
+import java.util.Objects;
 
 public class Epreuve {
     private String codeECUE;
@@ -60,5 +61,27 @@ public class Epreuve {
 
     public void setModalite(Modalite modalite) {
         this.modalite = modalite;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Epreuve epreuve)) {return false;}
+        return Objects.equals(codeECUE, epreuve.codeECUE) && Objects.equals(datePassage, epreuve.datePassage) && Objects.equals(heurePassage, epreuve.heurePassage) && Objects.equals(dureePassage, epreuve.dureePassage) && modalite == epreuve.modalite;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codeECUE, datePassage, heurePassage, dureePassage, modalite);
+    }
+
+    @Override
+    public String toString() {
+        return "Epreuve{" +
+                "codeECUE='" + codeECUE + '\'' +
+                ", datePassage=" + datePassage +
+                ", heurePassage=" + heurePassage +
+                ", dureePassage=" + dureePassage +
+                ", modalite=" + modalite +
+                '}';
     }
 }

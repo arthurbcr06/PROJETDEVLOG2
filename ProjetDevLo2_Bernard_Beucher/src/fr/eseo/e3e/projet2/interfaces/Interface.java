@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -254,7 +253,7 @@ public class Interface {
             int nbEtudiants;
             while (true) {
                 nbEtudiants = lireEntierPositif("Nombre d'étudiants impliqués : ");
-                if (nbEtudiants >= 1) break;
+                if (nbEtudiants >= 1) {break;}
                 System.out.println("Erreur : il doit y avoir au moins 1 étudiant impliqué.");
             }
 
@@ -273,7 +272,7 @@ public class Interface {
             this.gestionnaire.ajouterEpreuve(epreuve);
             System.out.println("Formulaire ajouté avec succès. ID: " + formulaire.getIdentifiantNumeriqueUnique());
 
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Erreur inattendue lors de la création du formulaire : " + e.getMessage());
         }
     }
@@ -290,7 +289,7 @@ public class Interface {
             try {
                 final List<Formulaire> resultats = this.gestionnaire.getFormulairesParEtudiant(num);
                 afficherResultatsFormulaires(resultats);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Erreur lors de la recherche : " + e.getMessage());
             }
 
@@ -299,7 +298,7 @@ public class Interface {
             try {
                 final List<Formulaire> resultats = this.gestionnaire.getFormulairesParEpreuve(code);
                 afficherResultatsFormulaires(resultats);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Erreur lors de la recherche : " + e.getMessage());
             }
 
@@ -335,7 +334,7 @@ public class Interface {
             try {
                 final List<Etudiant> resultats = this.gestionnaire.rechercherParNom(nom);
                 afficherResultatsEtudiants(resultats);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Erreur lors de la recherche : " + e.getMessage());
             }
 
@@ -344,7 +343,7 @@ public class Interface {
             try {
                 final List<Etudiant> resultats = this.gestionnaire.rechercherParPrenom(prenom);
                 afficherResultatsEtudiants(resultats);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Erreur lors de la recherche : " + e.getMessage());
             }
 

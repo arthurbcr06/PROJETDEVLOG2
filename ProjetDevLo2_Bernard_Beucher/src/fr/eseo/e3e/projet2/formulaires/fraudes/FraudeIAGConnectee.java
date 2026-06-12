@@ -1,6 +1,7 @@
 package fr.eseo.e3e.projet2.formulaires.fraudes;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class FraudeIAGConnectee extends FraudeIAG {
     private String adresseIP;
@@ -20,5 +21,24 @@ public class FraudeIAGConnectee extends FraudeIAG {
 
     public void setAdresseIP(String adresseIP) {
         this.adresseIP = adresseIP;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof FraudeIAGConnectee that)) {return false;}
+        if (!super.equals(o)) {return false;}
+        return Objects.equals(adresseIP, that.adresseIP);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), adresseIP);
+    }
+
+    @Override
+    public String toString() {
+        return "FraudeIAGConnectee{" +
+                "adresseIP='" + adresseIP + '\'' +
+                '}';
     }
 }

@@ -51,8 +51,8 @@ public class Etudiant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Etudiant)) return false;
+        if (this == o) {return true;}
+        if (!(o instanceof Etudiant)) {return false;}
         Etudiant e = (Etudiant) o;
         return this.numeroApprenant == e.numeroApprenant;
     }
@@ -60,6 +60,16 @@ public class Etudiant {
     @Override
     public int hashCode() {
         return Integer.hashCode(numeroApprenant);
+    }
+
+    @Override
+    public String toString() {
+        return "Etudiant{" +
+                "nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", numeroApprenant=" + numeroApprenant +
+                ", cursus=" + cursus +
+                '}';
     }
 }
 

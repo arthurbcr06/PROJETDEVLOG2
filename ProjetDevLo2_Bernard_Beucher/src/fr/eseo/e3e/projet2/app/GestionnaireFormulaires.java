@@ -4,7 +4,12 @@ import fr.eseo.e3e.projet2.formulaires.Epreuve;
 import fr.eseo.e3e.projet2.formulaires.Etudiant;
 import fr.eseo.e3e.projet2.formulaires.Formulaire;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class GestionnaireFormulaires {
 
@@ -78,6 +83,9 @@ public class GestionnaireFormulaires {
 
     public List<Formulaire> getFormulairesParEpreuve(String code){
         List<Formulaire> result = new ArrayList<>();
+        if (code == null || code.trim().isEmpty()) {
+            throw new IllegalArgumentException("Le code d'épreuve ne peut pas être null ou vide");
+        }
         if (formulaires == null) {
             System.out.println("Aucun formulaire trouvé.");
             return result;
@@ -92,6 +100,9 @@ public class GestionnaireFormulaires {
 
     public List<Etudiant> rechercherParNom(String nom) {
         List<Etudiant> result = new ArrayList<>();
+        if (nom == null || nom.trim().isEmpty()) {
+            throw new IllegalArgumentException("Le nom ne peut pas être null ou vide");
+        }
         if (formulaires == null) {
             System.out.println("Aucun formulaire trouvé.");
             return result;
@@ -149,21 +160,26 @@ public class GestionnaireFormulaires {
         double sumSquares = 0.0;
 
         for (Formulaire f : formulaires) {
-            if (f == null) continue;
+            if (f == null) {continue;}
             totalFormulaires++;
 
             List<Etudiant> etudiants = f.getEtudiants();
             if (etudiants != null) {
                 for (Etudiant e : etudiants) {
-                    if (e != null) etudiantsDistincts.add(e.getNumeroApprenant());
+                    if (e != null) {etudiantsDistincts.add(e.getNumeroApprenant());}
                 }
             }
 
             List<?> fraudes = f.getFraudes();
-            if (fraudes == null) continue;
+            if (fraudes == null) {continue;}
             int nbFraudes = fraudes.size();
             totalFraudes += nbFraudes;
             sumSquares += (double) nbFraudes * nbFraudes;
+        }
+
+        if (totalFormulaires == 0) {
+            System.out.println("Impossible de calculer les statistiques : aucun formulaire valide.");
+            return;
         }
 
         double moyenne = (double) totalFraudes / totalFormulaires;

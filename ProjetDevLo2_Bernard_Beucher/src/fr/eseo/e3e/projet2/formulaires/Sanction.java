@@ -1,5 +1,6 @@
 package fr.eseo.e3e.projet2.formulaires;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Sanction {
     private TypeSanction type;
@@ -38,5 +39,25 @@ public class Sanction {
 
     public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Sanction sanction)) {return false;}
+        return type == sanction.type && Objects.equals(dateDecision, sanction.dateDecision) && Objects.equals(commentaire, sanction.commentaire);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, dateDecision, commentaire);
+    }
+
+    @Override
+    public String toString() {
+        return "Sanction{" +
+                "type=" + type +
+                ", dateDecision=" + dateDecision +
+                ", commentaire='" + commentaire + '\'' +
+                '}';
     }
 }

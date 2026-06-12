@@ -3,7 +3,11 @@ package fr.eseo.e3e.projet2.app;
 import fr.eseo.e3e.projet2.formulaires.Etudiant;
 import fr.eseo.e3e.projet2.formulaires.Formulaire;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class GrapheFraudeurs {
     private Map<Etudiant, Set<Etudiant>> adjacence;

@@ -1,9 +1,9 @@
 package fr.eseo.e3e.projet2.formulaires;
 import fr.eseo.e3e.projet2.formulaires.fraudes.Fraude;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Formulaire {
     private static int compteur = 0;
@@ -26,8 +26,8 @@ public class Formulaire {
     public Formulaire(Epreuve epreuve, List<Etudiant> etudiants, List<Fraude> fraudes, Sanction sanction) {
         this();
         this.epreuve = epreuve;
-        if (etudiants != null) this.etudiants.addAll(etudiants);
-        if (fraudes != null) this.fraudes.addAll(fraudes);
+        if (etudiants != null) {this.etudiants.addAll(etudiants);}
+        if (fraudes != null) {this.fraudes.addAll(fraudes);}
         this.sanction = sanction;
     }
 
@@ -76,5 +76,28 @@ public class Formulaire {
     public void setEpreuve(Epreuve epreuve) {
         this.epreuve = epreuve;
         this.dateDerniereModification = LocalDate.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Formulaire that)) {return false;}
+        return identifiantNumeriqueUnique == that.identifiantNumeriqueUnique && Objects.equals(dateCreation, that.dateCreation) && Objects.equals(dateDerniereModification, that.dateDerniereModification) && Objects.equals(epreuve, that.epreuve) && Objects.equals(sanction, that.sanction) && Objects.equals(etudiants, that.etudiants) && Objects.equals(fraudes, that.fraudes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifiantNumeriqueUnique, dateCreation, dateDerniereModification, epreuve, sanction, etudiants, fraudes);
+    }
+
+    @Override
+    public String toString() {
+        return "Formulaire{" +
+                "identifiantNumeriqueUnique=" + identifiantNumeriqueUnique +
+                ", dateCreation=" + dateCreation +
+                ", dateDerniereModification=" + dateDerniereModification +
+                ", epreuve=" + (epreuve != null ? epreuve.getCodeECUE() : "null") +
+                ", etudiants=" + etudiants.size() +
+                ", fraudes=" + fraudes.size() +
+                '}';
     }
 }
