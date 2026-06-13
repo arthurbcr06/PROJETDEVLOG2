@@ -1,7 +1,7 @@
 package fr.eseo.e3e.projet2.formulaires;
 
 /**
- * @                                     Énumération des différents types de sanctions possibles.
+ * Énumération des différents types de sanctions possibles.
  */
 
 public enum TypeSanction {

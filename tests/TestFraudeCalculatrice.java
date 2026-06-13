@@ -53,4 +53,15 @@ public class TestFraudeCalculatrice {
         assertEquals("TI", fraude.getMarqueAppareil());
         assertEquals("prog.py", fraude.getProgrammeStocke());
     }
+
+    @Test
+    void testEqualsEtHashCode() {
+        LocalDate date = LocalDate.of(2026, 6, 12);
+        FraudeCalculatrice fraude1 = new FraudeCalculatrice(date,"Calculatrice programmée","programme stocké","Casio","programme.py");
+
+        FraudeCalculatrice fraude2 = new FraudeCalculatrice(date,"Calculatrice programmée","programme stocké","Casio","programme.py");
+
+        assertEquals(fraude1, fraude2);
+        assertEquals(fraude1.hashCode(), fraude2.hashCode());
+    }
 }

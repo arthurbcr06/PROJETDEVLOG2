@@ -53,4 +53,14 @@ public class TestFraudeIAGConnectee {
         assertEquals("ChatGPT", fraude.getNomService());
         assertEquals("10.0.0.1", fraude.getAdresseIP());
     }
+
+    @Test
+    void testEqualsEtHashCode() {
+        LocalDate date = LocalDate.of(2026, 6, 12);
+        FraudeIAGConnectee fraude1 = new FraudeIAGConnectee(date,"IAG connectée","via réseau","Gemini","192.253.21.1");
+        FraudeIAGConnectee fraude2 = new FraudeIAGConnectee(date,"IAG connectée","via réseau","Gemini","192.253.21.1");
+
+        assertEquals(fraude1, fraude2);
+        assertEquals(fraude1.hashCode(), fraude2.hashCode());
+    }
 }

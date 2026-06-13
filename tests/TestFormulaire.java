@@ -126,4 +126,20 @@ public class TestFormulaire {
         LocalDate dateModif = f.getDateDerniereModification();
         assertTrue(dateModif.isEqual(dateInit) || dateModif.isAfter(dateInit));
     }
+
+    @Test
+    void testEquals(){
+        Formulaire f1 = new Formulaire();
+        Formulaire f2 = new Formulaire();
+
+        assertNotEquals(f1, f2);
+    }
+
+    @Test
+    void testHashCode(){
+        Formulaire f1 = new Formulaire();
+        Formulaire f2 = new Formulaire();
+
+        assertNotEquals(f1.hashCode(), f2.hashCode());
+    }
 }

@@ -43,4 +43,14 @@ public class TestFraudeIAG {
         assertEquals("Contenu IAG", fraude.getContenu());
         assertEquals("Gemini", fraude.getNomService());
     }
+
+    @Test
+    void testEqualsEtHashCode() {
+        LocalDate date = LocalDate.of(2026, 6, 12);
+        FraudeIAG fraude1 = new FraudeIAG(date, "Utilisation de ChatGPT", "copie écran", "ChatGPT");
+        FraudeIAG fraude2 = new FraudeIAG(date, "Utilisation de ChatGPT", "copie écran", "ChatGPT");
+
+        assertEquals(fraude1, fraude2);
+        assertEquals(fraude1.hashCode(), fraude2.hashCode());
+    }
 }

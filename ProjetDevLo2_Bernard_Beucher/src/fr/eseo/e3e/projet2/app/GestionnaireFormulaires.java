@@ -11,36 +11,75 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Classe représentant un gestionnaire de formulaires.
+ * Elle permet de gérer une collection de formulaires et d'épreuves.
+ *
+ * Le gestionnaire offre des méthodes pour ajouter, supprimer et rechercher des formulaires et des étudiants,
+ * ainsi que pour calculer des statistiques sur les formulaires, afficher un graphe des relations de fraudeurs
+ * et détecter les récidivistes.
+ */
 public class GestionnaireFormulaires {
 
     private List<Formulaire> formulaires;
     private List<Epreuve> epreuves;
 
+    // Constructeur par défaut, initialise les listes de formulaires et d'épreuves.
     public GestionnaireFormulaires() {
         this.formulaires = new ArrayList<>();
         this.epreuves = new ArrayList<>();
     }
 
+    /**
+     * Retourne la liste des formulaires gérés par le gestionnaire.
+     *
+     * @return la liste des formulaires
+     */
     public List<Formulaire> getFormulaires() {
         return formulaires;
     }
 
+    /**
+     * Définit la liste des formulaires gérés par le gestionnaire.
+     *
+     * @param formulaires la nouvelle liste de formulaires
+     */
     public void setFormulaires(List<Formulaire> formulaires) {
         this.formulaires = formulaires;
     }
 
+    /**
+     * Retourne la liste des épreuves gérées par le gestionnaire.
+     *
+     * @return la liste des épreuves
+     */
     public List<Epreuve> getEpreuves() {
         return epreuves;
     }
 
+    /**
+     * Définit la liste des épreuves gérées par le gestionnaire.
+     *
+     * @param epreuves la nouvelle liste d'épreuves
+     */
     public void setEpreuves(List<Epreuve> epreuves) {
         this.epreuves = epreuves;
     }
 
+    /**
+     * Ajoute un formulaire à la liste des formulaires gérés par le gestionnaire.
+     *
+     * @param f le formulaire à ajouter
+     */
     public void ajouterFormulaire(Formulaire f) {
         this.formulaires.add(f);
     }
 
+    /**
+     * Supprime un formulaire de la liste des formulaires gérés par le gestionnaire en fonction de son identifiant unique.
+     *
+     * @param id l'identifiant unique du formulaire à supprimer
+     */
     public void supprimerFormulaire(int id) {
         if (formulaires == null || formulaires.isEmpty()) {
             System.out.println("Aucun formulaire disponible.");
@@ -60,10 +99,21 @@ public class GestionnaireFormulaires {
         }
     }
 
+    /**
+     * Ajoute une épreuve à la liste des épreuves gérées par le gestionnaire.
+     *
+     * @param epreuve l'épreuve à ajouter
+     */
     public void ajouterEpreuve(Epreuve epreuve) {
         this.epreuves.add(epreuve);
     }
 
+    /**
+     * Retourne la liste des formulaires associés à un étudiant donné en fonction de son numéro d'apprenant.
+     *
+     * @param numeroApprenant le numéro d'apprenant de l'étudiant
+     * @return la liste des formulaires associés à l'étudiant
+     */
     public List<Formulaire> getFormulairesParEtudiant(int numeroApprenant){
         List<Formulaire> result = new ArrayList<>();
         if (formulaires == null) {
@@ -81,6 +131,12 @@ public class GestionnaireFormulaires {
         return result;
     }
 
+    /**
+     * Retourne la liste des formulaires associés à une épreuve donnée en fonction de son code.
+     *
+     * @param code le code de l'épreuve
+     * @return la liste des formulaires associés à l'épreuve
+     */
     public List<Formulaire> getFormulairesParEpreuve(String code){
         List<Formulaire> result = new ArrayList<>();
         if (code == null || code.trim().isEmpty()) {
@@ -98,6 +154,12 @@ public class GestionnaireFormulaires {
         return result;
     }
 
+    /**
+     * Recherche les étudiants par leur nom.
+     *
+     * @param nom le nom de l'étudiant à rechercher
+     * @return la liste des étudiants correspondant au nom donné
+     */
     public List<Etudiant> rechercherParNom(String nom) {
         List<Etudiant> result = new ArrayList<>();
         if (nom == null || nom.trim().isEmpty()) {
@@ -117,6 +179,12 @@ public class GestionnaireFormulaires {
         return result;
     }
 
+    /**
+     * Recherche les étudiants par leur prénom.
+     *
+     * @param prenom le prénom de l'étudiant à rechercher
+     * @return la liste des étudiants correspondant au prénom donné
+     */
     public List<Etudiant> rechercherParPrenom(String prenom) {
         List<Etudiant> result = new ArrayList<>();
         if (formulaires == null) {
@@ -133,6 +201,12 @@ public class GestionnaireFormulaires {
         return result;
     }
 
+    /**
+     * Recherche un étudiant par son numéro d'apprenant.
+     *
+     * @param numeroApprenant le numéro d'apprenant de l'étudiant à rechercher
+     * @return l'étudiant correspondant au numéro d'apprenant donné, ou null si non trouvé
+     */
     public Etudiant trouverParNumero(int numeroApprenant) {
         if (formulaires == null) {
             System.out.println("Aucun formulaire trouvé.");
@@ -148,6 +222,11 @@ public class GestionnaireFormulaires {
         return null;
     }
 
+    /**
+     * Calcule et affiche les statistiques des formulaires gérés par le gestionnaire.
+     * Les statistiques incluent le nombre total de formulaires, le nombre d'étudiants distincts,
+     * le nombre total de fraudes, la moyenne de fraudes par formulaire et l'écart-type des fraudes.
+     */
     public void calculerStatistiques() {
         if (formulaires == null || formulaires.isEmpty()) {
             System.out.println("Aucun formulaire disponible.");
@@ -186,14 +265,18 @@ public class GestionnaireFormulaires {
         double variance = (sumSquares / totalFormulaires) - (moyenne * moyenne);
         double ecartType = Math.sqrt(Math.max(0.0, variance));
 
-        System.out.println("=== STATISTIQUES ===");
-        System.out.println("Total formulaires                : " + totalFormulaires);
-        System.out.println("Étudiants distincts              : " + etudiantsDistincts.size());
-        System.out.println("Total fraudes                    : " + totalFraudes);
-        System.out.println("Moyenne fraudes / formulaire     : " + String.format("%.2f", moyenne));
-        System.out.println("Écart‑type (population)          : " + String.format("%.2f", ecartType));
+        System.out.println("Statistiques des formulaires :\n");
+        System.out.println("Total formulaires : " + totalFormulaires);
+        System.out.println("Étudiants distincts : " + etudiantsDistincts.size());
+        System.out.println("Total fraudes : " + totalFraudes);
+        System.out.println("Moyenne fraudes / formulaire : " + String.format("%.2f", moyenne));
+        System.out.println("Écart‑type (population) : " + String.format("%.2f", ecartType));
     }
 
+    /**
+     * Affiche le graphe des relations de fraudeurs basé sur les formulaires gérés par le gestionnaire.
+     * Si aucun formulaire n'est disponible, un message est affiché.
+     */
     public void afficherGraphe() {
         if (formulaires == null || formulaires.isEmpty()) {
             System.out.println("Aucun formulaire disponible : le graphe est vide.");
@@ -203,6 +286,11 @@ public class GestionnaireFormulaires {
         graphe.afficher();
     }
 
+    /**
+     * Détecte les étudiants récidivistes, c'est-à-dire ceux qui apparaissent dans au moins deux formulaires.
+     *
+     * @return la liste des étudiants récidivistes
+     */
     public List<Etudiant> detecterRecidivistes() {
         Map<Etudiant, Integer> comptage = new HashMap<>();
         if (formulaires != null) {

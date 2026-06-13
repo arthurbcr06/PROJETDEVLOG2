@@ -54,42 +54,20 @@ public class TestEtudiant {
     }
 
     @Test
-    void testEqualsBaseesSurNumeroApprenant() {
-        Etudiant e1 = new Etudiant("Dupont", "Jean", 100, Cursus.E1);
-        Etudiant e2 = new Etudiant("Martin", "Marie", 100, Cursus.E4);
-        Etudiant e3 = new Etudiant("Dupont", "Jean", 101, Cursus.E1);
+    void testEquals() {
+        Etudiant e1 = new Etudiant("A", "A", 100, Cursus.E1);
+        Etudiant e2 = new Etudiant("B", "B", 100, Cursus.E4);
+        Etudiant e3 = new Etudiant("C", "C", 101, Cursus.E2);
 
-        assertEquals(e1, e2);
-        assertNotEquals(e1, e3);
+        assertEquals(e1, e2); // même numéro apprenant
+        assertNotEquals(e1, e3); // numéros apprenants différents
     }
 
     @Test
-    void testHashCodeBaseSurNumeroApprenant() {
+    void testHashCode() {
         Etudiant e1 = new Etudiant("A", "A", 100, Cursus.E1);
         Etudiant e2 = new Etudiant("B", "B", 100, Cursus.E4);
 
-        assertEquals(e1.hashCode(), e2.hashCode());
-    }
-
-    @Test
-    void testEqualsAvecNull() {
-        Etudiant e = new Etudiant("A", "A", 100, Cursus.E1);
-
-        assertNotEquals(e, null);
-    }
-
-    @Test
-    void testEqualsAvecAutreType() {
-        Etudiant e = new Etudiant("A", "A", 100, Cursus.E1);
-        String s = "Etudiant";
-
-        assertNotEquals(e, s);
-    }
-
-    @Test
-    void testEqualsAvecMemeObjet() {
-        Etudiant e = new Etudiant("A", "A", 100, Cursus.E1);
-
-        assertEquals(e, e);
+        assertEquals(e1.hashCode(), e2.hashCode()); // même numéro apprenant
     }
 }

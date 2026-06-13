@@ -47,4 +47,17 @@ public class TestFraudePapier {
         assertEquals("A3", fraude.getDimension());
         assertFalse(fraude.isPlieOuNon());
     }
+
+    @Test
+    void testEqualsEtHashCode() {
+        LocalDate date = LocalDate.of(2026, 6, 12);
+        FraudePapier fraude1 = new FraudePapier(date,"Feuille de brouillon cachée","formules de cours","A4",false);
+        FraudePapier fraude2 = new FraudePapier(date,"Feuille de brouillon cachée","formules de cours","A4",false);
+        FraudePapier fraude3 = new FraudePapier(date,"Papier dans la trousse","corrigé de l'ancien exam","A3",true);
+
+        assertEquals(fraude1, fraude2);
+        assertNotEquals(fraude1, fraude3);
+        assertEquals(fraude1.hashCode(), fraude2.hashCode());
+        assertNotEquals(fraude1.hashCode(), fraude3.hashCode());
+    }
 }

@@ -40,4 +40,17 @@ public class TestSanction {
         assertEquals(date, s.getDateDecision());
         assertEquals("Fraude avérée", s.getCommentaire());
     }
+
+    @Test
+    void testEqualsEtHashCode() {
+        LocalDate date = LocalDate.of(2026, 6, 12);
+        Sanction s1 = new Sanction(TypeSanction.AVERTISSEMENT, date, "Copie partielle");
+        Sanction s2 = new Sanction(TypeSanction.AVERTISSEMENT, date, "Copie partielle");
+        Sanction s3 = new Sanction(TypeSanction.EXCLUSION_SESSION, date, "Fraude avérée");
+
+        assertEquals(s1, s2);
+        assertNotEquals(s1, s3);
+        assertEquals(s1.hashCode(), s2.hashCode());
+        assertNotEquals(s1.hashCode(), s3.hashCode());
+    }
 }

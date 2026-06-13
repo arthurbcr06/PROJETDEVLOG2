@@ -1,6 +1,8 @@
 import fr.eseo.e3e.projet2.formulaires.Epreuve;
 import fr.eseo.e3e.projet2.formulaires.Modalite;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -36,11 +38,12 @@ public class TestEpreuve {
         assertEquals(Modalite.ECRIT, ep.getModalite());
     }
 
-    @Test
-    void testSetCodeECUE() {
+    @ParameterizedTest
+    @CsvSource({"POO", "DEVLO", "TEST"})
+    void testSetCodeECUE(String code) {
         Epreuve ep = new Epreuve();
-        ep.setCodeECUE("DEVLO");
-        assertEquals("DEVLO", ep.getCodeECUE());
+        ep.setCodeECUE(code);
+        assertEquals(code, ep.getCodeECUE());
     }
 
     @Test
@@ -101,5 +104,25 @@ public class TestEpreuve {
 
         assertNotEquals(ep1.getCodeECUE(), ep2.getCodeECUE());
         assertNotEquals(ep1.getDatePassage(), ep2.getDatePassage());
+    }
+
+    @Test
+    void testEquals(){
+        Epreuve ep1 = new Epreuve("POO", LocalDate.of(2026, 6, 3), LocalTime.of(9, 0), Duration.ofMinutes(120), Modalite.ECRIT);
+        Epreuve ep2 = new Epreuve("POO", LocalDate.of(2026, 6, 3), LocalTime.of(9, 0), Duration.ofMinutes(120), Modalite.ECRIT);
+        Epreuve ep3 = new Epreuve("DEVLO", LocalDate.of(2026, 6, 4), LocalTime.of(14, 0), Duration.ofMinutes(60), Modalite.QCM);
+
+        assertTrue(ep1.equals(ep2));
+        assertFalse(ep1.equals(ep3));
+    }
+
+    @Test
+    void testHashCode(){
+        Epreuve ep1 = new Epreuve("POO", LocalDate.of(2026, 6, 3), LocalTime.of(9, 0), Duration.ofMinutes(120), Modalite.ECRIT);
+        Epreuve ep2 = new Epreuve("POO", LocalDate.of(2026, 6, 3), LocalTime.of(9, 0), Duration.ofMinutes(120), Modalite.ECRIT);
+        Epreuve ep3 = new Epreuve("DEVLO", LocalDate.of(2026, 6, 4), LocalTime.of(14, 0), Duration.ofMinutes(60), Modalite.QCM);
+
+        assertEquals(ep1.hashCode(), ep2.hashCode());
+        assertNotEquals(ep1.hashCode(), ep3.hashCode());
     }
 }

@@ -20,21 +20,45 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classe représentant l'interface utilisateur pour la gestion des formulaires.
+ * Elle permet d'ajouter, supprimer, rechercher des formulaires et rechercher
+ * un étudiant, ainsi que de calculer des statistiques, d'afficher un graphe
+ * des fraudeurs et de détecter les récidivistes. Et de quitter l'application bien sûr !
+ *
+ * On peut naviguer dans le menu principal pour effectuer différentes actions.
+ * Le menu est affiché à l'utilisateur sur la console.
+ */
 public class Interface {
 
     private GestionnaireFormulaires gestionnaire;
     private Etudiant etudiant;
     private Scanner scanner;
 
+    // Constructeur par défaut, initialisant le scanner pour la saisie utilisateur.
     public Interface() {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Constructeur prenant le GestionnaireFormulaires en paramètre.
+     * Permet d'initialiser l'interface avec un gestionnaire existant.
+     *
+     * @param gestionnaire le gestionnaire de formulaires à utiliser
+     */
     public Interface(final GestionnaireFormulaires gestionnaire) {
         this.gestionnaire = gestionnaire;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Méthode pour lire une chaîne de caractères non vide depuis la console.
+     * Si l'utilisateur saisit une chaîne vide, un message d'erreur est affiché
+     * et l'utilisateur est invité à réessayer.
+     *
+     * @param invite le message d'invite à afficher à l'utilisateur
+     * @return la chaîne de caractères saisie par l'utilisateur
+     */
     private String lireChaine(String invite) {
         while (true) {
             System.out.print(invite);
@@ -46,6 +70,14 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour lire un entier positif depuis la console.
+     * Si l'utilisateur saisit une valeur non entière ou négative, un message d'erreur est affiché
+     * et l'utilisateur est invité à réessayer.
+     *
+     * @param invite le message d'invite à afficher à l'utilisateur
+     * @return l'entier positif saisi par l'utilisateur
+     */
     private int lireEntierPositif(String invite) {
         while (true) {
             System.out.print(invite);
@@ -63,23 +95,14 @@ public class Interface {
         }
     }
 
-    private long lireLongPositif(String invite) {
-        while (true) {
-            System.out.print(invite);
-            String saisie = this.scanner.nextLine().trim();
-            try {
-                long valeur = Long.parseLong(saisie);
-                if (valeur <= 0) {
-                    System.out.println("Erreur : la durée doit être strictement positive.");
-                    continue;
-                }
-                return valeur;
-            } catch (NumberFormatException e) {
-                System.out.println("Erreur : saisie invalide. Veuillez entrer un nombre entier (ex. : 120).");
-            }
-        }
-    }
-
+    /**
+     * Méthode pour lire une date au format AAAA-MM-JJ depuis la console.
+     * Si l'utilisateur saisit une date invalide, un message d'erreur est affiché
+     * et l'utilisateur est invité à réessayer.
+     *
+     * @param invite le message d'invite à afficher à l'utilisateur
+     * @return la date saisie par l'utilisateur
+     */
     private LocalDate lireDate(String invite) {
         while (true) {
             System.out.print(invite);
@@ -92,6 +115,14 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour lire une heure au format HH:MM depuis la console.
+     * Si l'utilisateur saisit une heure invalide, un message d'erreur est affiché
+     * et l'utilisateur est invité à réessayer.
+     *
+     * @param invite le message d'invite à afficher à l'utilisateur
+     * @return l'heure saisie par l'utilisateur
+     */
     private LocalTime lireHeure(String invite) {
         while (true) {
             System.out.print(invite);
@@ -104,6 +135,14 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour lire une modalité depuis la console.
+     * Si l'utilisateur saisit une modalité invalide, un message d'erreur est affiché
+     * et l'utilisateur est invité à réessayer.
+     *
+     * @param invite le message d'invite à afficher à l'utilisateur
+     * @return la modalité saisie par l'utilisateur
+     */
     private Modalite lireModalite(String invite) {
         while (true) {
             System.out.print(invite);
@@ -116,6 +155,14 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour lire un cursus depuis la console.
+     * Si l'utilisateur saisit un cursus invalide, un message d'erreur est affiché
+     * et l'utilisateur est invité à réessayer.
+     *
+     * @param invite le message d'invite à afficher à l'utilisateur
+     * @return le cursus saisi par l'utilisateur
+     */
     private Cursus lireCursus(String invite) {
         while (true) {
             System.out.print(invite);
@@ -128,11 +175,19 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour attendre que l'utilisateur appuie sur la touche entrée avant de revenir au menu principal.
+     * Affiche un message d'invite à l'utilisateur.
+     */
     private void attendreRetour() {
         System.out.println("Appuyer sur entrée pour revenir au menu principal");
         this.scanner.nextLine();
     }
 
+    /**
+     * Méthode principale pour lancer le menu de l'application.
+     * Affiche le menu principal et traite les choix de l'utilisateur jusqu'à ce qu'il choisisse de quitter.
+     */
     public void lancerMenu() {
         String choix;
         for (boolean continuer = true; continuer; continuer = this.traiterOption(choix)) {
@@ -142,6 +197,10 @@ public class Interface {
         System.out.println("Fermeture de l'application");
     }
 
+    /**
+     * Méthode pour afficher le menu principal de l'application.
+     * Affiche les différentes options disponibles pour l'utilisateur.
+     */
     private void afficherMenu() {
         System.out.println("Menu principal");
         System.out.println("1. Ajouter un formulaire");
@@ -155,6 +214,13 @@ public class Interface {
         System.out.print("Votre choix :");
     }
 
+    /**
+     * Méthode pour traiter le choix de l'utilisateur dans le menu principal.
+     * Selon le choix, appelle les méthodes correspondantes pour effectuer l'action souhaitée.
+     *
+     * @param choix le choix de l'utilisateur
+     * @return true si l'application doit continuer, false si elle doit se fermer
+     */
     private boolean traiterOption(final String choix) {
         if (choix == null || choix.trim().isEmpty()) {
             System.out.println("Erreur : aucun choix saisi.");
@@ -237,13 +303,18 @@ public class Interface {
         return true;
     }
 
+    /**
+     * Méthode pour gérer l'ajout d'un formulaire.
+     * Demande à l'utilisateur de saisir les informations nécessaires pour créer un formulaire,
+     * puis l'ajoute au gestionnaire de formulaires.
+     */
     private void menuAjoutFormulaire() {
         try {
             System.out.println("=== Création d'un formulaire ===");
             final String code = lireChaine("Code ECUE [DEVLO, POO, SHL, TEST, DEEP, DS, TNI, TNS, ASI, ANG]: ");
             final LocalDate date = lireDate("Date passage (AAAA-MM-JJ) : ");
             final LocalTime heure = lireHeure("Heure passage (HH:MM) : ");
-            final long minutes = lireLongPositif("Durée (minutes) : ");
+            final int minutes = lireEntierPositif("Durée (minutes) : ");
             final Modalite modalite = lireModalite("Modalité " + Arrays.toString(Modalite.values()) + " : ");
 
             final Epreuve epreuve = new Epreuve(code, date, heure, Duration.ofMinutes(minutes), modalite);
@@ -277,6 +348,11 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour gérer la recherche de formulaires.
+     * Permet à l'utilisateur de rechercher des formulaires soit par étudiant (numéro apprenant),
+     * soit par épreuve (code ECUE).
+     */
     private void menuRechercheFormulaires() {
         System.out.println("Recherche de formulaires ");
         System.out.println("1. Par étudiant (numéro apprenant)");
@@ -307,6 +383,12 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour afficher les résultats de la recherche de formulaires.
+     * Affiche les informations des formulaires trouvés ou un message indiquant qu'aucun formulaire n'a été trouvé.
+     *
+     * @param resultats la liste des formulaires trouvés
+     */
     private void afficherResultatsFormulaires(List<Formulaire> resultats) {
         if (resultats == null || resultats.isEmpty()) {
             System.out.println("Aucun formulaire n'a été trouvé");
@@ -321,6 +403,10 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour gérer la recherche d'un étudiant.
+     * Permet à l'utilisateur de rechercher un étudiant soit par nom, soit par prénom, soit par numéro apprenant.
+     */
     private void menuRechercheEtudiant() {
         System.out.println("Recherche d'un étudiant ");
         System.out.println("1. Par nom");
@@ -365,6 +451,12 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode pour afficher les résultats de la recherche d'étudiants.
+     * Affiche les informations des étudiants trouvés ou un message indiquant qu'aucun étudiant n'a été trouvé.
+     *
+     * @param resultats la liste des étudiants trouvés
+     */
     private void afficherResultatsEtudiants(List<Etudiant> resultats) {
         if (resultats == null || resultats.isEmpty()) {
             System.out.println("Aucun étudiant n'a été trouvé");
@@ -378,6 +470,13 @@ public class Interface {
         }
     }
 
+    /**
+     * Méthode principale pour lancer l'application.
+     * Crée un gestionnaire de formulaires, ajoute des épreuves et des formulaires d'exemple,
+     * puis lance l'interface utilisateur.
+     *
+     * @param args les arguments de la ligne de commande (non utilisés)
+     */
     public static void main(final String[] args) {
         final GestionnaireFormulaires gestionnaire = new GestionnaireFormulaires();
 
